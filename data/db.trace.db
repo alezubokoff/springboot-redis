@@ -1,0 +1,8 @@
+2024-02-02 12:28:28.368224-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "insert into [*]user (name,id) values (?,default)"; expected "identifier"; SQL statement:
+insert into user (name,id) values (?,default) [42001-224]
+2024-02-02 12:30:07.015738-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+insert into users (name,id) values (?,default) [42104-224]
+2024-02-02 12:33:29.069988-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]

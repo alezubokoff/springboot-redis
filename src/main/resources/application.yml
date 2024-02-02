@@ -1,0 +1,24 @@
+spring:
+  cache:
+    type: redis
+  redis:
+    nodes: ${REDIS_NODES:127.0.0.1:6379}
+    ssl: false
+    max-redirects: 5
+    connect-timeout: 600
+    expiration: 100
+    timeout: 100
+    jedis:
+      pool:
+        max-wait: 400ms
+  h2:
+    console:
+      enabled: true
+  datasource:
+    url: jdbc:h2:file:./data/db
+    username: sa
+    password:
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
