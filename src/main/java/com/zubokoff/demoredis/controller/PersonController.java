@@ -23,9 +23,9 @@ public class PersonController {
         return ResponseEntity.ok().body(this.personService.getAll());
     }
 
-    @GetMapping("/keys")
-    public ResponseEntity<?> getKeys() {
-        return ResponseEntity.ok().body(this.personService.getKeys());
+    @GetMapping("/keys/{patternKey}")
+    public ResponseEntity<?> getKeys(@PathVariable String patternKey) {
+        return ResponseEntity.ok().body(this.personService.getKeys(patternKey));
     }
 
     @GetMapping("/{id}")

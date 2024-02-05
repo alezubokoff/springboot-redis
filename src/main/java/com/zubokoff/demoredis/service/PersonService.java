@@ -18,6 +18,8 @@ import java.util.Optional;
 @Service
 public class PersonService {
 
+    final String KEY = "cbti_conciliations:";
+
     private final PersonRepository personRepository;
 
     private final UserRepository userRepository;
@@ -43,8 +45,8 @@ public class PersonService {
         return person.orElse(null);
     }
 
-    public List<String> getKeys() {
-        var result = this.template.keys("*");
+    public List<String> getKeys(String patternKey) {
+        var result = this.template.keys(KEY + patternKey + "*");
         if(result != null) {
             return new ArrayList<>(result);
         }
