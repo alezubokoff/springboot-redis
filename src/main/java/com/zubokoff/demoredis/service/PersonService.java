@@ -10,9 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @RequiredArgsConstructor
 @Service
@@ -26,18 +24,27 @@ public class PersonService {
 
     private final RedisTemplate<String, Object> template;
 
-    public void save(Person person) {
-        String id = String.format("%s_%s", LocalDate.now().format(DateTimeFormatter.BASIC_ISO_DATE), person.getName());
-        person.setId(id);
-
+    public boolean save(int qtde, Person person) {
         User user = new User(null, "Alexandre");
         this.userRepository.save(user);
 
-        this.personRepository.save(person);
+        for (int i = 1; i <= qtde; i++) {
+            String id = String.format("%s_%s_%s",
+                    LocalDate.now().format(DateTimeFormatter.BASIC_ISO_DATE),
+                    person.getName(),
+                    i);
+            person.setId(id);
+            this.personRepository.save(person);
+        }
+        return true;
     }
 
     public List<Person> getAll() {
-        return (List<Person>) this.personRepository.findAll();
+        List<Person> persons = new ArrayList<>();
+        for(Person p : this.personRepository.findAll()) {
+            persons.add(p);
+        }
+        return persons;
     }
 
     public Person getById(String id) {
@@ -48,7 +55,9 @@ public class PersonService {
     public List<String> getKeys(String patternKey) {
         var result = this.template.keys(KEY + patternKey + "*");
         if(result != null) {
-            return new ArrayList<>(result);
+            List<String> keys = new ArrayList<>(result);
+            Collections.sort(keys);
+            return keys;
         }
         return null;
     }

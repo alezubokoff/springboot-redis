@@ -6,6 +6,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
 @RestController
 @RequestMapping("persons")
 @RequiredArgsConstructor
@@ -13,9 +17,12 @@ public class PersonController {
 
     private final PersonService personService;
 
-    @PostMapping
-    public void save(@RequestBody Person person) {
-        this.personService.save(person);
+    @PostMapping("/{qtde}")
+    public void save(@PathVariable int qtde, @RequestBody Person person) {
+        if (qtde == 0) {
+            qtde = 1;
+        }
+        this.personService.save(qtde, person);
     }
 
     @GetMapping
